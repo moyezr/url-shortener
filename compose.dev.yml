@@ -1,0 +1,17 @@
+services:
+  app:
+    env_file:
+      - .env.dev
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - url_shortener_data:/app/data
+    command: npm run dev
+volumes:
+  node_modules:
+  url_shortener_data:

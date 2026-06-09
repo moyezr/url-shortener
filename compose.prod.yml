@@ -1,0 +1,13 @@
+services:
+  app:
+    image: moyezr/url-shortener:0.1.1
+    ports:
+      - "127.0.0.1:3000:3000"
+    env_file:
+      - .env.prod
+    volumes:
+      - url_shortener_data:/app/data
+    restart: unless-stopped
+volumes:
+  url_shortener_data:
+    name: url-shortener-data
