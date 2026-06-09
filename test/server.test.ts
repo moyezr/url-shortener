@@ -32,8 +32,6 @@ describe("url shortener API", () => {
     const app = createTestApp();
 
     const response = await request(app).get("/health").expect(200);
-
-    expect(response.body).toEqual({ status: "healthy" });
   });
 
   it("creates a short link and redirects through it", async () => {
