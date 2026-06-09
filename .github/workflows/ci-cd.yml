@@ -94,29 +94,11 @@ jobs:
 
     steps:
       - name: Prepare SSH
-        env:
-          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-          EC2_KNOWN_HOSTS: ${{ secrets.EC2_KNOWN_HOSTS }}
         run: |
-          set -euo pipefail
           install -m 700 -d ~/.ssh
-
-          if [[ -z "${EC2_SSH_KEY:-}" ]]; then
-            echo "EC2_SSH_KEY secret is empty"
-            exit 1
-          fi
-
-          # Accept both multiline PEM content and single-line content with escaped \n.
-          key_content="${EC2_SSH_KEY//$'\r'/}"
-          key_content="${key_content//\\n/$'\n'}"
-          printf '%s\n' "$key_content" > ~/.ssh/ec2_key
+          printf '%s\n' "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key
           chmod 600 ~/.ssh/ec2_key
-
-          # Validate key format before trying SSH.
-          ssh-keygen -y -f ~/.ssh/ec2_key > /dev/null
-
-          printf '%s\n' "$EC2_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+          printf '%s\n' "${{ secrets.EC2_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
       - name: Pull and restart container
         env:
