@@ -8,7 +8,7 @@ export function createRoutes(options: AppOptions): Router {
   const router = Router();
 
   router.get("/health", (_req, res) => {
-    res.json({ status: "healthy" });
+    res.json({ status: "very healthy" });
   });
 
   router.get("/api/links", (req, res) => {
